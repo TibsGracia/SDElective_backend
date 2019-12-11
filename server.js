@@ -21,13 +21,10 @@ app.post('/addRoom', (req, res) => {
     console.log(req.body)
     const data = new Room({
         name: req.body.name,
-        records: [{
-            openTime: req.body.openTime,
-            closeTime: req.body.closeTime
-        }]
+        openTime: req.body.openTime
     });
     data.save((err) => {
-        if (err) return res.status(404).send({ error: err.message });
+        if (err) return res.status(404).send({ error: err });
         return res.send({ data });
     });
 });
@@ -51,9 +48,9 @@ app.delete('/deleteRoom/:id', (req, res) => {
 })
 
 app.get('/retrieve', (req, res) => {
-    Room.find({}, (err, data) => {
-        if (err) return res.status(404).send({ error: err.message });
-        return res.send({ message: 'Success', data })
+    Room.find({}).sort({_id: 1}).exec(function(err, data) {
+        if (err) return res.status(404).send({ error: err });
+        return res.status(200).json(data)
     })
 })
 

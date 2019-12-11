@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <title>Tilt</title>
+</head>
+
+<body>
+    <div class="head1">
+        <span class="fas fa-door-open logo"></span>
+        <span class="h1p">Portahan</span>
+        <i class="fas fa-bars icon"></i>
+        <div class="accSettings">
+            <p>Settings</p>
+            <p id="logout">Logout</p>
+        </div>
+    </div>
+    <div class="head">
+        <p class="latestOpened"></p>
+        <button class="navp"><i class="fas fa-history his"></i>Show all recent</button>
+    </div>
+    <div class="cont2">
+        <div class="drout">
+            <div class="rec2 bord">Room 1
+            </div>
+            <div class="rec2 total">Total:&nbsp;<span class="room1t">0</span></div>
+            <div class="dr">
+                <div class="room1"></div>
+            </div>
+        </div>
+        <div class="drout">
+            <div class="rec2 bord">Room 2
+            </div>
+            <div class="rec2 total">Total:&nbsp;<span class="room2t">0</span></div>
+            <div class="dr">
+                <div class="room2"></div>
+            </div>
+        </div>
+
+        <div class="drout">
+            <div class="rec2 bord">Room 3
+            </div>
+            <div class="rec2 total">Total:&nbsp;<span class="room3t">0</span></div>
+            <div class="dr">
+                <div class="room3"></div>
+            </div>
+        </div>
+        <div class="drout">
+            <div class="rec2 bord">Room 4
+            </div>
+            <div class="rec2 total">Total:&nbsp;<span class="room4t">0</span></div>
+            <div class="dr">
+                <div class="room4"></div>
+            </div>
+        </div>
+        <div class="drout">
+            <div class="rec2 bord">Room 5
+            </div>
+            <div class="rec2 total">Total:&nbsp;<span class="room5t">0</span></div>
+            <div class="dr">
+                <div class="room5"></div>
+            </div>
+        </div>
+        <div class="drout">
+            <div class="rec2 bord">Room 6
+            </div>
+            <div class="rec2 total">Total:&nbsp;<span class="room6t">0</span></div>
+            <div class="dr">
+                <div class="room6"></div>
+            </div>
+        </div>
+        <div class="drout">
+            <div class="rec2 bord">Room 7
+            </div>
+            <div class="rec2 total">Total:&nbsp;<span class="room7t">0</span></div>
+            <div class="dr">
+                <div class="room7"></div>
+            </div>
+        </div>
+        <div class="drout">
+            <div class="rec2 bord">Room 8
+            </div>
+            <div class="rec2 total">Total:&nbsp;<span class="room8t">0</span></div>
+            <div class="dr">
+                <div class="room8"></div>
+            </div>
+        </div>
+
+
+    </div>
+    <script src="browserMqtt.js"></script>
+    <script src="controller.js"></script>
+</body>
+
+</html>
+<script>
+    $(document).ready(function () {
+        if (localStorage.getItem("auth") == null) {
+            window.location.href = "tilt.html";
+        }
+        $.ajax({
+            url: 'http://localhost:3000/retrieve',
+            // dataType: "jsonp",
+            type: 'GET',
+            jsonpCallback: 'callback', // this is not relevant to the POST anymore
+            success: function (data) {
+                console.log(data)
+                data.forEach(record => {
+                    var status = '<div class="rec"><i class="fas fa-door-open"></i><span>&nbsp;openned</span><p class="time">' + record.openTime + '</p></div>';
+                    $("." + record.name).prepend(status);
+                    var total = $("." + record.name+"t").text();
+                   $("." + record.name+"t").text(Number(total)+1);
+                });
+                console.log('Success: ')
+            },
+            error: function (xhr, status, error) {
+                console.log('Error: ' + error.message);
+                alert("error in getting data!")
+                $('#lblResponse').html('Error connecting to the server.');
+            },
+        });
+    })
+</script>
+
+<style>
+    .cont2 {
+        /* background: white; */
+        /* background-image: url("images/backdoor.jpg"); */
+        background-size: cover;
+        position: fixed;
+        height: 100%;
+        z-index: -1;
+        width: 100%;
+        text-align: center;
+        overflow: auto;
+        padding: 8px;
+        letter-spacing: 2px;
+        box-sizing: border-box;
+       
+    }
+
+    .dr {
+        height: 300px;
+        margin: 2px;
+        overflow: auto;
+    }
+
+    .rec2 {
+        font-size: 18px;        
+        position: relative;
+        text-align: center;
+        padding: 8px 10px;
+        background: rgb(188, 193, 196);
+        /* margin: 10px 15px; */
+        /* background:rgb(110, 110, 110); */
+        /* border-bottom: 1px solid black; */
+    }
+
+    .rec {
+        position: relative;
+        color: rgb(71, 70, 70);
+        text-align: left;
+        letter-spacing: 0;
+
+        font-size: 15px;
+        padding: 6px 15px;
+        /* border-bottom: 1px solid rgb(199, 197, 197); */
+    }
+
+
+    .bord {
+        box-sizing: border-box;
+    }
+
+    .drout {
+        display: inline-block;
+        width: 23% !important;
+        background: rgb(213, 220, 223);
+        margin: 8px;
+        border:1px solid rgb(168, 183, 190);
+        /* -webkit-box-shadow: 3px 3px 3px 0px grey;
+        box-shadow: 3px 3px 3px 0px grey; */
+    }
+
+    .time {
+        position: absolute;
+        right: 10px;
+        top: 5px;
+        background: rgb(213, 220, 223);
+    }
+
+    /* width */
+    ::-webkit-scrollbar {
+        width: 4px;
+        padding: 1px;
+
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: rgb(155, 154, 154);
+        margin: 1px !important;
+
+        /* background: transparent; */
+        /* border: 1px solid rgb(122, 121, 121); */
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgb(182, 180, 180);
+    }
+
+    .head {
+        /* height: 40px; */
+        background: rgb(121, 126, 131);
+        padding:5px;
+    }
+
+    .head1 {
+        color: white;
+        padding: 5px 10px;
+        background: rgb(31, 31, 31);
+        box-sizing: border-box;
+        position: relative;
+    }
+
+    .h1p {
+        letter-spacing: 2px;
+
+        font-size: 18px;
+        margin: 0;
+    }
+
+    .icon {
+        color: white;
+        font-size: 24px;
+        position: absolute;
+        right: 15px;
+        top: 10px;
+    }
+
+    .logo {
+        font-size: 18px;
+        padding: 9px 7px;
+        background: white;
+        margin: 0px 5px;
+        border-radius: 25px;
+        color: black;
+    }
+
+    .accSettings {
+        color: white;
+        position: absolute;
+        background: rgb(31, 31, 31);
+        right: 10px;
+        top: 45px;
+        display: none;
+    }
+
+    .accSettings p {
+        margin: 0;
+        padding: 5px 10px;
+
+    }
+
+    .accSettings p:hover {
+        background: rgb(90, 89, 89);
+    }
+
+    .total {
+        padding: 1px 10px;
+        font-size: 13px;
+        color: white;
+        background: rgb(150, 156, 160);
+    }
+
+    .latestOpened {
+        color:white;
+        display: inline;
+        padding:15px;
+        margin:5px;
+        /* border-right: 1px solid white; */
+    }
+
+    .navp {
+        color:white;
+        display: inline;
+        border:1px solid white;
+        background: transparent;
+        font-size: 13px;
+
+    }
+
+    button:focus {
+        outline: none;
+        color: rgb(200, 217, 221);
+        border-color:rgb(200, 217, 221);
+
+    }
+
+    .his {
+        margin: 7px;
+    }
+    
+</style>

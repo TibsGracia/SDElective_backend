@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tilt</title>
+</head>
+
+<body>
+    <div class="cont"></div>
+    <div class="passhold">
+        <p class="fas fa-door-open logoi"></p>
+        <p class="port">Portahan</p>
+        <div class="inputholder">
+            <form class="portal">
+                <input type="password" placeholder="Password" id="pass" class="myin">
+                <button class="enter" type="submit" id="enter">Enter</button>
+            </form>
+            <p class="incorrect">Incorrect password!</p>
+        </div>
+    </div>
+    <script src="browserMqtt.js"></script>
+    <script src="controller.js"></script>
+</body>
+
+</html>
+<script>
+    $(document).ready(function () {
+        if (localStorage.getItem("auth") != null) {
+            window.location.href = "home.html";
+        }
+    })
+</script>
+
+<style>
+    .cont {
+        /* background:black; */
+        background-image: url("images/backdoor.jpg");
+        background-size: cover;
+        position: fixed;
+        height: 100%;
+        z-index: -1;
+        width: 100%;
+        text-align: center;
+        background-repeat: no-repeat;
+        /* opacity:0.9; */
+    }
+
+    .passhold {
+        margin-top: 300px;
+        display: inline-block;
+        height: 500px;
+        width: 250px;
+        color: white;
+        /* border:2px solid white; */
+    }
+
+    .myin {
+        padding: 5px 10px;
+        border: 1px solid white;
+        display: block;
+        color: white;
+        box-sizing: border-box;
+        width: 100%;
+        background: rgba(254, 255, 255, 0.2);
+        padding-right: 60px;
+    }
+
+    body {
+        text-align: center;
+    }
+
+    .port {
+        font-size: 45px;
+        letter-spacing: 10px;
+        opacity: 0.9;
+    }
+
+    .enter {
+        /* margin:20px; */
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 6px 10px;
+        border-color: white;
+        background: white;
+        text-decoration: none;
+        border: none;
+
+    }
+
+    input:focus {
+        outline: none;
+    }
+
+    button:focus {
+        outline: none;
+        color: grey;
+
+    }
+
+    .inputholder {
+        position: relative;
+    }
+
+    .logoi {
+        font-size: 30px;
+        /* background: rgb(63, 62, 62); */
+        color:black;
+        /* background:rgb(255, 255, 255); */
+        background:rgb(247, 246, 246);
+        padding: 14px 10px;
+        border-radius: 50%;
+        /* border-right:10px solid rgb(121, 120, 120);
+        border-top:10px solid rgb(83, 82, 82);
+        border-bottom:10px solid rgb(83, 82, 82);
+        border-left:10px solid rgb(121, 120, 120); */
+    }
+
+    .incorrect {
+        display: none;
+    }
+</style>
